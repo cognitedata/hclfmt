@@ -14,6 +14,7 @@ import (
 	"github.com/hashicorp/hcl/hcl/printer"
 )
 
+// Version is a version info of this app
 const Version = "0.1.0"
 
 var (
@@ -41,7 +42,7 @@ func realMain() error {
 	if *cpuprofile != "" {
 		f, err := os.Create(*cpuprofile)
 		if err != nil {
-			return fmt.Errorf("creating cpu profile: %s\n", err)
+			return fmt.Errorf("creating cpu profile: %s", err)
 		}
 		defer f.Close()
 		pprof.StartCPUProfile(f)
