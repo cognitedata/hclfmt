@@ -1,10 +1,10 @@
-# Archived project. No maintenance. 
+# HclFmt :: Revivified
 
-This project is not maintained anymore and is archived. Feel free to fork and
-make your own changes if needed. For more detail read my blog post: [Taking an indefinite sabbatical from my projects](https://arslan.io/2018/10/09/taking-an-indefinite-sabbatical-from-my-projects/)
+This project is a fork from the original [fatih/hclfmt](https://github.com/fatih/hclfmt) .  Please see that project for reference.
 
-Thanks to everyone for their valuable feedback and contributions.
+HclFmt is meant to be a very simple tool for use in text editors to keep your `.hcl` files squared away to the latest of hashicorp's standards.
 
+Notable differences between the original project and this iteration is the sourcing of the `hclparse` and `hclwrite` packages from the [hashicorp/hcl2](https://github.com/hashicorp/hcl2) codebase.  Some recent developments in hcl were not captured in the `hcl/printer` package of [hashicorp/hcl](https://github.com/hashicorp/hcl).
 
 # hclfmt [![Build Status](http://img.shields.io/travis/fatih/hclfmt.svg?style=flat-square)](https://travis-ci.org/fatih/hclfmt)
 
