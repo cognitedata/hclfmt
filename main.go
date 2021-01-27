@@ -11,8 +11,8 @@ import (
 	"runtime/pprof"
 	"strings"
 
-	"github.com/hashicorp/hcl2/hclparse"
-	"github.com/hashicorp/hcl2/hclwrite"
+	"github.com/hashicorp/hcl/v2/hclparse"
+	"github.com/hashicorp/hcl/v2/hclwrite"
 
 	"github.com/gruntwork-io/terragrunt/util"
 )
@@ -136,7 +136,7 @@ func processFile(filename string, in io.Reader, out io.Writer, stdin bool) error
 	res := hclwrite.Format(src)
 
 	if *write {
-		err = ioutil.WriteFile(filename, res, 0644)
+		err = ioutil.WriteFile(filename, res, 0o644)
 	} else {
 		_, err = out.Write(res)
 	}
