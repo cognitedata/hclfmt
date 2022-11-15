@@ -11,7 +11,10 @@ import (
 	"runtime/pprof"
 	"strings"
 
-	"github.com/hashicorp/hcl/hcl/printer"
+	"github.com/hashicorp/hcl/v2/hclparse"
+	"github.com/hashicorp/hcl/v2/hclwrite"
+
+	"github.com/gruntwork-io/terragrunt/util"
 )
 
 // Version is a version info of this app
@@ -98,6 +101,18 @@ func visitFile(path string, f os.FileInfo, err error) error {
 	return err
 }
 
+func checkHcl(src []byte, hclFilename string) error {
+	parser := hclparse.NewParser()
+	_, diags := parser.ParseHCL(src, hclFilename)
+	diagWriter := util.GetDiagnosticsWriter(parser)
+	diagWriter.WriteDiagnostics(diags)
+
+	if diags.HasErrors() {
+		return diags
+	}
+	return nil
+}
+
 // If in == nil, the source is the contents of the file with the given filename.
 func processFile(filename string, in io.Reader, out io.Writer, stdin bool) error {
 	if in == nil {
@@ -114,13 +129,15 @@ func processFile(filename string, in io.Reader, out io.Writer, stdin bool) error
 		return err
 	}
 
-	res, err := printer.Format(src)
+	err = checkHcl(src, filename)
 	if err != nil {
 		return err
 	}
 
+	res := hclwrite.Format(src)
+
 	if *write {
-		err = ioutil.WriteFile(filename, res, 0644)
+		err = ioutil.WriteFile(filename, res, 0o644)
 	} else {
 		_, err = out.Write(res)
 	}
