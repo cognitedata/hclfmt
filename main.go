@@ -65,7 +65,7 @@ func realMain() error {
 			walkDir(path)
 		default:
 			if err := processFile(path, nil, os.Stdout, false); err != nil {
-				return err
+				return fmt.Errorf("%s: %v", path, err)
 			}
 		}
 	}
